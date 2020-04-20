@@ -45,9 +45,8 @@ for obj in nodes.items:
           fail.add(name)
           echo "Not found " & name
 
-      if dirExists("../repos/" & name):
-        removeDir("../repos/" & name)
-      discard execShellCmd("cd ../repos && git init --bare ./" & name)
+      if not dirExists("../repos/" & name):
+        discard execShellCmd("cd ../repos && git init --bare ./" & name)
       let ret = execShellCmd("cd ../hg/" & name & " && hg bookmarks hg && hg bookmark -f master && hg push ../../repos/" & name)
       if ret != 0:
         fail.add(name)
