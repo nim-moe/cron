@@ -47,12 +47,8 @@ for obj in nodes.items:
 
       if not dirExists("../repos/" & name):
         discard execShellCmd("cd ../repos && git init --bare ./" & name)
-      let ret = execShellCmd("cd ../hg/" & name & " && hg bookmarks hg && hg bookmark -f master && hg push ../../repos/" & name)
-      if ret != 0:
-        fail.add(name)
-        echo "Failed"
-      else:
-        echo "Done"
+      discard execShellCmd("cd ../hg/" & name & " && hg bookmarks hg && hg bookmark -f master && hg push ../../repos/" & name)
+      echo "Done"
 
 for item in nodes.mitems:
   if not item.contains("url") or fail.contains(item["name"].getStr()):
